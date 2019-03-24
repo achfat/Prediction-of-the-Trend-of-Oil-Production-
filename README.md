@@ -44,10 +44,10 @@ L'objectif de ce défi est de prédire la probabilité d'augmentation de la prod
 
 Le fichier de soumission doit être un fichier CSV au format suivant (la première ligne du fichier est l'en-tête): 
 
-"ID"; "Target" 
-"ID10160"; xxxx 
+"ID"; "Target" <br>
+"ID10160"; xxxx <br>
 ... 
-"ID12159"; xxxx   
+"ID12159"; xxxx   <br>
 
 Lorsque xxxx est une probabilité (nombre compris entre 0 et 1 inclus), par exemple 0.5. 
 La métrique utilisée pour ce challenge est l'AUC (aire sous la courbe ROC). 
