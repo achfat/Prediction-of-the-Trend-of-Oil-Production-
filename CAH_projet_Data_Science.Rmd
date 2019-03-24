@@ -1,0 +1,80 @@
+
+---
+title: "Data challenge - Predict the Crude Oil production trend"
+
+output:
+  html_document: default
+  html_notebook: default
+  pdf_document: default
+
+---
+
+### Méthode de visualisation de groupes homogènes hiérarchiques par le CAH.
+
+```{r}
+# package permettant de réduire le temps de calcul du dendogramme lorsque les données sont importantes
+library(fastcluster)
+
+train <- read.csv("Train.csv",header=TRUE, sep=';')
+
+``` 
+
+```{r}
+# Eliminons , les variables qualitatives mois, année ainsi que la variable ID
+# Le modèle ne fonctionnant pas avec les variables qualitatives on les transformera par la suite.
+train$ID = NULL
+train$month = NULL
+train$country = NULL
+
+```
+
+```{r}
+# Matrice des distances entre les individus
+dist.train = dist(train)
+
+# CAH avec le critère de Ward 
+# method = « ward.D2 » correspond au vrai critère de Ward qui utilise le carré de la distance 
+dendrogramme = hclust(dist.train, method = "ward.D2")
+
+
+# Affichage du dendrogramme 
+# labels = FALSE , ici permet de supprimer les étiquettes des individus
+# pour que le dendogramme soit plus lisible.
+# En effet ,les données sont beaucoup trop importantes et alourdissent la lecture du dendogramme
+plot(dendrogramme, labels = FALSE, main = "Dendrogramme")
+
+```
+
+```{r}
+
+# Comment obtenir une segmentation en K groupes ? 
+# Pour obtenir une partition de la population , c'est à dire le nombre de groupe à retenir 
+# on peut découper le dendogramme à une certaine hauteur.
+# Nous allons utiliser le critère du saut d'inertie
+
+# Calcul de la perte d'inertie relative du dendrogramme 
+inertie = sort(dendrogramme$height, decreasing = TRUE)
+
+# Affiche la courbe de la perte d'inertie relative en fonction du nombre de classe qu'on choisit
+plot(inertie[1:20], type = "s", xlab = "Nombre de classes", ylab = "Inertie")
+
+# On voit un saut assez net à 2 classes
+# que nous avons représenté ci-dessous en violet
+points(c(2), inertie[c(2)], col = c( "magenta"), cex = 2, lwd = 3)
+
+```
+
+```{r}
+# Pour visualiser les 2 partitions directement sur le dendrogramme
+plot(dendrogramme, labels = FALSE, main = "Partition en 2 classes ", xlab = "", ylab = "", sub = "", axes = FALSE, hang = -1)
+rect.hclust(dendrogramme, 2, border = "magenta")
+
+# Dendrogramme avec les 2 partitions distinctes colorées
+library(FactoMineR)
+library(JLutils)
+A2Rplot(dendrogramme, k = 2, boxes = FALSE, col.up = "gray50",  show.labels = FALSE)
+
+# Partition obtenu pour le CAH
+CAH = cutree(dendrogramme, 2)
+
+```
