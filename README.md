@@ -5,8 +5,10 @@
 ​
 ## 1. Description des données
 ​
-Les ensembles de données fournis contiennent des données sur le pétrole brut, y compris lease condensate - à l'exclusion des NGL (hydrocarbures liquides ou liquides). Toutes les données fournies sont des Open Data provenant de "The Joint Organizations Data Initiative (JODI)".   
+Les ensembles de données fournis contiennent des données sur le pétrole brut, y compris lease condensate - à l'exclusion des NGL (hydrocarbures liquides ou liquides). Toutes les données fournies sont des Open Data provenant de "The Joint Organizations Data Initiative (JODI)".  
+
 Les données historiques couvrent les déclarations de tous les producteurs de pétrole brut du monde entier pour la période allant de janvier 2002 à août 2016. 
+
 Chaque ligne est définie par son identifiant unique et contient des informations historiques concernant le secteur du pétrole brut d'un pays au cours de la dernière année. Certaines de ces caractéristiques contiennent des informations agrégées sur le secteur mondial du pétrole brut. 
  
 La séparation entre le training et le test a été faite, de sorte que les données les plus récentes ont été mises dans le jeu de données de test. Les pays ont été anonymisés dans les données. L'objectif est d'estimer pour l'ensemble des données de test la probabilité de l'augmentation de la production de pétrole brut pour le trimestre suivant et cela pour chaque ligne. 
